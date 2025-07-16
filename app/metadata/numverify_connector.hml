@@ -1,0 +1,96 @@
+kind: DataConnectorLink
+version: v1
+definition:
+  name: numverify_connector
+  url:
+    readWriteUrls:
+      read:
+        valueFromEnv: APP_NUMVERIFY_CONNECTOR_READ_URL
+      write:
+        valueFromEnv: APP_NUMVERIFY_CONNECTOR_WRITE_URL
+  headers:
+    Authorization:
+      valueFromEnv: APP_NUMVERIFY_CONNECTOR_AUTHORIZATION_HEADER
+  schema:
+    version: v0.1
+    schema:
+      collections: []
+      functions:
+        - arguments:
+            phoneNumber:
+              description: '- The phone number to validate, including country code (e.g. "+14158586273").'
+              type:
+                name: String
+                type: named
+          description: Validates a phone number using the NumVerify API.
+          name: checkPhoneNumber
+          result_type:
+            name: NumVerifyResponse
+            type: named
+      object_types:
+        NumVerifyResponse:
+          description: Interface representing the detailed response from NumVerify API for phone validation.
+          fields:
+            carrier:
+              type:
+                name: String
+                type: named
+            country_code:
+              type:
+                name: String
+                type: named
+            country_name:
+              type:
+                name: String
+                type: named
+            country_prefix:
+              type:
+                name: String
+                type: named
+            international_format:
+              type:
+                name: String
+                type: named
+            line_type:
+              type:
+                name: String
+                type: named
+            local_format:
+              type:
+                name: String
+                type: named
+            location:
+              type:
+                name: String
+                type: named
+            number:
+              type:
+                name: String
+                type: named
+            valid:
+              type:
+                name: Boolean
+                type: named
+      procedures: []
+      scalar_types:
+        Boolean:
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+          representation:
+            type: boolean
+        String:
+          aggregate_functions: {}
+          comparison_operators:
+            _eq:
+              type: equal
+          representation:
+            type: string
+    capabilities:
+      capabilities:
+        mutation: {}
+        query:
+          nested_fields: {}
+          variables: {}
+      version: 0.1.6

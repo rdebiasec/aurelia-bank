@@ -1,0 +1,100 @@
+---
+kind: ObjectType
+version: v1
+definition:
+  name: num_verify_response
+  description: Interface representing the detailed response from NumVerify API for
+    phone validation.
+  fields:
+    - name: carrier
+      type: String!
+    - name: country_code
+      type: String!
+    - name: country_name
+      type: String!
+    - name: country_prefix
+      type: String!
+    - name: international_format
+      type: String!
+    - name: line_type
+      type: String!
+    - name: local_format
+      type: String!
+    - name: location
+      type: String!
+    - name: number
+      type: String!
+    - name: valid
+      type: Boolean!
+  graphql:
+    typeName: num_verify_response
+    inputTypeName: num_verify_response_input
+  dataConnectorTypeMapping:
+    - dataConnectorName: numverify_connector
+      dataConnectorObjectType: NumVerifyResponse
+
+---
+kind: TypePermissions
+version: v1
+definition:
+  typeName: num_verify_response
+  permissions:
+    - role: admin
+      output:
+        allowedFields:
+          - carrier
+          - country_code
+          - country_name
+          - country_prefix
+          - international_format
+          - line_type
+          - local_format
+          - location
+          - number
+          - valid
+    - role: Ricardo
+      output:
+        allowedFields:
+          - carrier
+          - country_code
+          - country_name
+          - country_prefix
+          - international_format
+          - line_type
+          - local_format
+          - location
+          - number
+          - valid
+---
+kind: Command
+version: v1
+definition:
+  name: check_phone_number
+  outputType: num_verify_response!
+  arguments:
+    - name: phone_number
+      type: String!
+      description: '- The phone number to validate, including country code (e.g.
+        "+14158586273").'
+  source:
+    dataConnectorName: numverify_connector
+    dataConnectorCommand:
+      function: checkPhoneNumber
+    argumentMapping:
+      phone_number: phoneNumber
+  graphql:
+    rootFieldName: check_phone_number
+    rootFieldKind: Query
+  description: Validates a phone number using the NumVerify API.
+
+---
+kind: CommandPermissions
+version: v1
+definition:
+  commandName: check_phone_number
+  permissions:
+    - role: admin
+      allowExecution: true
+    - role: Ricardo
+      allowExecution: true
+
